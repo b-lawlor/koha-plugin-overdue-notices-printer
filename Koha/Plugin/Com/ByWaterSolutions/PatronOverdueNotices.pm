@@ -107,6 +107,7 @@ sub report_step2 {
     my $filter_issues     = scalar $cgi->param('filter_issues');
     my @categorycodes     = $cgi->multi_param('categorycode');
     my @loststatuses      = $cgi->multi_param('loststatuses');
+    my @itemtypes         = $cgi->multi_param('itemtypes');
 
     ( $days_from, $days_to ) = ( $days_to, $days_from )
       if ( $days_to > $days_from );
@@ -116,6 +117,9 @@ sub report_step2 {
 
     @loststatuses = map { qq{'$_'} } @loststatuses;
     my $loststatuses = join( ',', @loststatuses );
+
+    @itemtypes = map { qq{'$_'} } @itemtypes;
+    my $itemtypes = join( ',', @itemtypes );
 
     my $dbh   = C4::Context->dbh();
     my $query = qq{
@@ -180,6 +184,9 @@ WHERE  1
         push( @params, $patron_cardnumber );
     }
 
+    if ( @itemtypes ) {
+        $query .= qq{ AND items.itype IN ( $itemtypes ) };
+    }
 
     if ( @loststatuses ) {
         $query .= qq{ AND items.itemlost NOT IN ( $loststatuses ) };

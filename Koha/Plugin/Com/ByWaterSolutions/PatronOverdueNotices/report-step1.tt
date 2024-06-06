@@ -1,6 +1,7 @@
 [% USE Branches %]
 [% USE Categories %]
 [% USE AuthorisedValues %]
+[% USE ItemTypes %]
 [% INCLUDE 'doc-head-open.inc' %]
  <title>Koha: Plugins: Patron overdue notices</title>
 [% INCLUDE 'doc-head-close.inc' %]
@@ -65,6 +66,18 @@
                                 </li>
                             [% END %]
                         </ol>
+                    </fieldset>
+
+                    <fieldset class="rows">
+                        <legend>Item types</legend>
+                            <ol>
+                                [% FOREACH itemtype IN ItemTypes.Get() %]
+                                    <li>
+                                        <label>[% itemtype.description %]:</label>
+                                        <input type="checkbox" name="itemtypes" value="[% itemtype.itemtype %]">
+                                    </li>
+                                [% END %]
+                            </ol>
                     </fieldset>
 
                     <fieldset class="rows">
