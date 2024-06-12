@@ -5,6 +5,16 @@
 [% INCLUDE 'doc-head-open.inc' %]
  <title>Koha: Plugins: Patron overdue notices</title>
 [% INCLUDE 'doc-head-close.inc' %]
+<style>
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-auto-rows: 1fr;
+    }
+    .grid label {
+        width: unset !important;
+    }
+</style>
 </head>
 <body>
 [% INCLUDE 'header.inc' %]
@@ -57,8 +67,11 @@
 
                     <fieldset class="rows">
                         <legend>Patron categories</legend>
-
-                        <ol>
+                        <div class="toolbar">
+                            <a class="SelectAll" href="#"><i class="fa fa-check"></i> Select all</a> |
+                            <a class="ClearAll" href="#"><i class="fa fa-times"></i> Clear all</a>
+                        </div>
+                        <ol class="grid">
                             [% FOREACH c IN Categories.all %]
                                 <li>
                                     <label>[% c.description %]:</label>
@@ -70,7 +83,11 @@
 
                     <fieldset class="rows">
                         <legend>Item types</legend>
-                            <ol>
+                        <div class="toolbar">
+                            <a class="SelectAll" href="#"><i class="fa fa-check"></i> Select all</a> |
+                            <a class="ClearAll" href="#"><i class="fa fa-times"></i> Clear all</a>
+                        </div>
+                            <ol class="grid">
                                 [% FOREACH itemtype IN ItemTypes.Get() %]
                                     <li>
                                         <label>[% itemtype.description %]:</label>
@@ -82,7 +99,11 @@
 
                     <fieldset class="rows">
                         <legend>Exclude LOST statuses</legend>
-                            <ol>
+                        <div class="toolbar">
+                            <a class="SelectAll" href="#"><i class="fa fa-check"></i> Select all</a> |
+                            <a class="ClearAll" href="#"><i class="fa fa-times"></i> Clear all</a>
+                        </div>
+                            <ol class="grid">
                                 [% FOREACH av IN AuthorisedValues.GetAuthValueDropbox('LOST') %]
                                     <li>
                                         <label>[% av.lib %]:</label>
@@ -167,5 +188,16 @@
         </div>
     </div>
 </div>
-
+<script>
+    $('.SelectAll').click( function(e) {
+        e.preventDefault();
+        let this_fs = $(this).closest('fieldset');
+        this_fs.find('input[type="checkbox"]').prop('checked' , true );
+    });
+    $('.ClearAll').click( function(e) {
+        e.preventDefault();
+        let this_fs = $(this).closest('fieldset');
+        this_fs.find('input[type="checkbox"]').prop('checked' , false );
+    });
+</script>
 [% INCLUDE 'intranet-bottom.inc' %]
