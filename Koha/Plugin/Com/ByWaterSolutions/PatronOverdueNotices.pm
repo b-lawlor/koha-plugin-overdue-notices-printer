@@ -130,6 +130,7 @@ sub report_step2 {
             borrowers.address,
             borrowers.address2,
             borrowers.borrowernumber,
+            borrowers.cardnumber,
             borrowers.branchcode,
             borrowers.city,
             borrowers.email,
