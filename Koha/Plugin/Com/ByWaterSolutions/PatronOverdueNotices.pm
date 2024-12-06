@@ -230,7 +230,7 @@ WHERE  1
                 letter_code            => $notice_code,
                 borrowernumber         => $borrowernumber,
                 branchcode =>
-                  $overdues->{$borrowernumber}->[0]->{patron_branchcode},
+                  $overdues->{$borrowernumber}->[0]->{branchcode},
                 items      => $overdues->{$borrowernumber},
                 substitute => {
                     count => scalar @{ $overdues->{$borrowernumber} },
