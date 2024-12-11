@@ -145,7 +145,11 @@ sub report_step2 {
             items.homebranch,
             items.itemcallnumber,
             items.itemnumber,
-            items.price
+            items.price,
+            items.replacementprice,
+            items.itype,
+            items.onloan
+
 FROM   issues
        LEFT JOIN accountlines a USING ( borrowernumber )
        LEFT JOIN items
@@ -223,7 +227,6 @@ WHERE  1
 
     my @notices;
     foreach my $borrowernumber ( keys %$overdues ) {
-
         my $notice = parse_overdues_letter(
             {
                 message_transport_type => 'print',
